@@ -1,9 +1,27 @@
 package org.example.models;
 
+import java.util.List;
+
 public class Bot extends Player{
     // enum botDifficultyLevel
-    public enum BotDifficultyLevel {
-        EASY, MEDIUM, HARD
+    private BotDifficultyLevel botDifficultyLevel;
+
+    public Bot(String name, Symbol symbol, PlayerType playerType, BotDifficultyLevel botDifficultyLevel) {
+        super(name, symbol, playerType);
+        this.botDifficultyLevel = botDifficultyLevel;
     }
-    BotDifficultyLevel difficultyLevel;
+
+    @Override
+    public Move makeMove(Board board){
+        // finding the first empty cell in the board
+
+        for(List<Cell> row : board.getBoard()){
+            for(Cell cell : row){
+                if(cell.getState().equals(CellState.EMPTY)){
+                    return new Move(cell, this);
+                }
+            }
+        }
+        return null;
+    }
 }
